@@ -119,7 +119,7 @@ const UserSidebar = () => {
             {!isCollapsed && <span>Bidding</span>}
           </Link> */}
           <Link 
-            to="/loginn" 
+            to="/login" 
             className={`flex items-center gap-4 p-5 transition-colors ${location.pathname === '/logout' ? 'bg-gray-700 text-yellow-500' : 'text-white hover:bg-gray-700'}`}
           >
             <BiLogOut className="text-2xl" />

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import seminar from "../assets/seminar.jpg";
-import Videos from "../assets/Videos.jpg";
 import meeting from "../assets/meeting.jpg";
 import news from "../assets/news.jpg";
+import videos from "../assets/videos.jpg"
 const TrainingPage = () => {
   const [pdfFile, setPdfFile] = useState(null);
   const [documents, setDocuments] = useState([
@@ -56,7 +56,7 @@ const TrainingPage = () => {
     navigate("/video-conference"); // Navigate to the VideoConferencing page
   };
   return (
-    <div className="min-h-screen bg-[#101114] text-white p-6">
+    <div className="min-h-screen bg-[#101114] text-white p-6 py-24">
       {/* Top Cards Section */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
         {[
@@ -71,7 +71,7 @@ const TrainingPage = () => {
           },
           {
             title: "Videos",
-            image: Videos, // Replace with the correct image source
+            image: videos, // Replace with the correct image source
             description: "Watch our expert-led video sessions anytime, anywhere.",
             // duration: "Duration: 25 mins",
             onClick: () =>navigate("/videos"), // Replace with the actual URL

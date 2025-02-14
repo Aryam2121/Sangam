@@ -11,7 +11,7 @@ import OfficerSidebar from './OfficerSidebar';
 const Sidebar = () => {
     const location = useLocation();
 
-    const noSidebarRoutes = ["/loginn", "/register"];
+    const noSidebarRoutes = ["/login", "/register"];
 
     const shouldShowSidebar = !noSidebarRoutes.includes(location.pathname);
     const role = localStorage.getItem('userRole'); // Or use context/redux for state management

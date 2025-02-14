@@ -21,7 +21,7 @@ const DashboardPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6"style={{ backgroundColor: "#101114" }}>
+    <div className="min-h-screen bg-gray-900 text-white py-28 p-6"style={{ backgroundColor: "#101114" }}>
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <input

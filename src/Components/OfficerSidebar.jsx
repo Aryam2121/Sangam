@@ -20,7 +20,7 @@ const OfficerSidebar = () => {
     // Optionally clear other application state (e.g., Redux, Context API, etc.)
 
     // Redirect to login page
-    navigate("/loginn");
+    navigate("/login");
   };
 
   return (
@@ -136,7 +136,7 @@ const OfficerSidebar = () => {
             {!isCollapsed && <span>Bidding</span>}
           </Link> */}
           <Link 
-            to="/loginn" 
+            to="/login" 
             onClick={handleLogout}
             className={`flex items-center gap-4 p-5 transition-colors ${location.pathname === '/logout' ? 'bg-gray-700 text-yellow-500' : 'text-white hover:bg-gray-700'}`}
           >

@@ -212,103 +212,89 @@
 
 // export default App;
 
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import axios from "axios";
+import { Toaster, toast } from "react-hot-toast";
+import { generateToken, messaging } from "./notification/firebase";
+import { onMessage } from "firebase/messaging";
 
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import axios from 'axios';
-import { Toaster, toast } from 'react-hot-toast';
-import { generateToken, messaging } from './notification/firebase';
-import { onMessage } from 'firebase/messaging';
+import Sidebar from "./Components/Sidebar";
+import Navbar from "./Components/Navbar";
+import LoginPage from "./pages/LoginPage";
+import Register from "./pages/Register";
+import PrivateRoute from "./Components/PrivateRoute";
+ import Gis from './Components/Gis';
 
-import Sidebar from './Components/Sidebar';
-import Navbar from './Components/Navbar';
-import LoginPage from './pages/LoginPage';
-import DepartmentPredPage from './Components/DepartmentPredPage';
-import DepartmentDetails from './Components/DepartmentDetails';
-import CostReductionPage from './Components/CostRedPred';
-import GisNew from './Components/Gisnew';
-import Arya from './Components/arya';
-import CompletedPath from './Components/CompletedPath';
-import TotalPath from './Components/TotalPath';
-import ResourceAllocationPage from './Components/ResourceAllocationPage';
-import ConflictPredPage from './Components/ConflictPre';
-import Seminar from './Components/Seminar';
-import MapWithLine from './Components/MapWithLine';
-import MapNew from './Components/MapNew';
-import AnamolyDetectionPage from './Components/AnamolyDetection';
-import Videos from './Components/Videos';
-import News from './Components/News';
-import DepartmentPage from './pages/DepartmentPage';
-import UserDashboard from './Components/UserDashboard';
-import GisMap from './Components/GisMap';
-import Register from './pages/Register';
-import BiddingPage from './Components/Bidding';
-import Gis from './Components/Gis';
-import TrainingPage from './Components/Training';
-import DashboardPage from './Components/Dashboard';
-import BidSystem from './Components/BidSystem';
-import TaskManager from './Components/TaskManager';
-import Project from './Components/Projects';
-import ProjectDetails from './Components/ProjectDetails';
-import ChatApp from './Components/Chat';
-import DiscussionForum from './Components/Disscuss';
-import VideoConferencePage from './pages/VideoConfrencing';
-import ProjectsM from './Components/ProjectsM';
-import Resources from './Components/Resources';
+ import TrainingPage from './Components/Training';
+ import VideoConferencePage from './pages/VideoConfrencing';
+ import DashboardPage from './Components/Dashboard';
+ import ProjectsM from './Components/ProjectsM';
+ import Project from './Components/Projects';
+ import Resources from './Components/Resources';
+
+ import OfficerTasks from './Components/OfficerTasks';
+ import TaskManager from './Components/TaskManager';
+ import { BrowserRouter  } from 'react-router-dom';
+ import ProjectDetails from './Components/ProjectDetails';
+ import ChatApp from './Components/Chat';
+ import DiscussionForum from './Components/Disscuss';
+ import BidSystem from './Components/BidSystem'
+ import BiddingPage from './Components/Bidding';
+
+ 
+ import AnamolyDetectionPage from './Components/AnamolyDetection';
+ import GisMap from './Components/GisMap'
+ import DepartmentPage from './pages/DepartmentPage';
+ 
+
+ import Seminar from './Components/Seminar';
+ import Videos from './Components/Videos';
+ import News from './Components/News';
+
+ import CostReductionPage from './Components/CostRedPred';
+ import MapWithLine from './Components/MapWithLine';
+
+ import UserDashboard from './Components/UserDashboard';
+ import MapNew from './Components/MapNew';
+ import ConflictPredPage from './Components/ConflictPre';
+ import DepartmentPredPage from './Components/DepartmentPredPage';
+ import ResourceAllocationPage from './Components/ResourceAllocationPage';
+ import GisNew from './Components/Gisnew';
+ import CompletedPath from './Components/TotalPath';
+ import TotalPath from './Components/CompletedPath';
+ import Arya from './Components/arya';
+ import DepartmentDetails from './Components/DepartmentDetails'
+
+
+
 
 const App = () => {
   const [resourcesIds, setResourcesIds] = useState([]);
-  const [departments, setDepartments] = useState([]);
-  const [projects, setProjects] = useState([]);
-  const [resources, setResources] = useState([]);
 
   useEffect(() => {
     // Initialize Firebase Notifications
     generateToken();
     onMessage(messaging, (payload) => {
-      console.log('Notification Received:', payload);
-      toast(payload.notification.body, { icon: '🔔' });
+      console.log("Notification Received:", payload);
+      toast(payload.notification.body, { icon: "🔔" });
     });
 
     // Fetch data from APIs
     const fetchData = async () => {
       try {
-        // Fetch all departments
-        const deptResponse = await axios.get(`https://${import.meta.env.VITE_BACKEND}/api/getalldep`);
-        const departmentData = deptResponse.data.map(department => ({
-          id: department._id,
-          name: department.name,
-          description: department.description,
-        }));
-        setDepartments(departmentData);
-
-        // Fetch all projects
-        const projResponse = await axios.get(`https://${import.meta.env.VITE_BACKEND}/api/getallprojects`);
-        const projectData = projResponse.data.map(project => ({
-          id: project._id,
-          name: project.name,
-          description: project.description,
-        }));
-        setProjects(projectData);
-
-        // Fetch all resources
-        const resResponse = await axios.get(`https://${import.meta.env.VITE_BACKEND}/api/getallresources`);
-        const resourceData = resResponse.data.map(resource => ({
+        const resResponse = await axios.get(
+          `https://${import.meta.env.VITE_BACKEND}/api/getallresources`
+        );
+        const resourceData = resResponse.data.map((resource) => ({
           id: resource._id,
           name: resource.name,
           description: resource.description,
         }));
-        setResources(resourceData);
-        setResourcesIds(resourceData.map(resource => resource.id));
-
-        // Fetch resources by project ID
-        const projectResourcesResponse = await axios.get(
-          `https://${import.meta.env.VITE_BACKEND}/api/project/6749b789545dcca89c35d67a/resources`
-        );
-        console.log('Resources by Project ID:', projectResourcesResponse.data);
+        setResourcesIds(resourceData.map((resource) => resource.id));
       } catch (error) {
-        console.error('Error fetching data:', error);
-        toast.error('Failed to fetch data. Please try again.');
+        console.error("Error fetching data:", error);
+        toast.error("Failed to fetch data. Please try again.");
       }
     };
 
@@ -317,22 +303,20 @@ const App = () => {
 
   return (
     <Router>
-      <div className="App">
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            style: { border: '1px solid #713200', padding: '16px', color: '#713200' },
-          }}
-        />
-        <div className="flex">
-          <Sidebar />
-        
-
-          <div className="flex-grow pt-5">
-            <Navbar />
-            <Routes>
-              
-              <Route path="/login" element={<LoginPage resource={resourcesIds} />} />
+    <div className="App">
+      <Toaster position="top-right" />
+      <div className="flex">
+        <Sidebar />
+        <div className="flex-grow pt-5">
+          <Navbar />
+          <Routes>
+            {/* Public Routes */}
+            <Route path="/login" element={<LoginPage resource={resourcesIds} />} />
+            <Route path="/register" element={<Register />} />
+  
+            {/* Protected Routes */}
+            <Route element={<PrivateRoute />}>
+              <Route path="/" element={<DashboardPage />} />
               <Route path="/departmentprediction" element={<DepartmentPredPage />} />
               <Route path="/departmentdetails" element={<DepartmentDetails />} />
               <Route path="/costreduction" element={<CostReductionPage />} />
@@ -351,11 +335,9 @@ const App = () => {
               <Route path="/department" element={<DepartmentPage />} />
               <Route path="/UserDashboard" element={<UserDashboard />} />
               <Route path="/project/:projectId/gis" element={<GisMap />} />
-              <Route path="/register" element={<Register />} />
               <Route path="/Bidding" element={<BiddingPage />} />
               <Route path="/Geolocation Interface" element={<Gis />} />
               <Route path="/training" element={<TrainingPage />} />
-              <Route path="/" element={<DashboardPage />} />
               <Route path="/BidSystem" element={<BidSystem />} />
               <Route path="/taskManager" element={<TaskManager />} />
               <Route path="/Projects" element={<Project />} />
@@ -365,11 +347,13 @@ const App = () => {
               <Route path="/video-conference" element={<VideoConferencePage />} />
               <Route path="/ProjectManagement" element={<ProjectsM />} />
               <Route path="/Resources" element={<Resources />} />
-            </Routes>
-          </div>
+            </Route>
+          </Routes>
         </div>
       </div>
-    </Router>
+    </div>
+  </Router>
+  
   );
 };
 

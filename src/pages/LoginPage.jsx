@@ -16,7 +16,7 @@ const LoginPage = ({ resource }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        passsword: '',
+        password: '',
     });
     const navigate = useNavigate(); // React Router's hook for navigation
 
@@ -44,24 +44,22 @@ const LoginPage = ({ resource }) => {
                 const data = await response.json();
                 const uuser = data.data.user;
                 localStorage.setItem('userRole', uuser.role);
-                toast("Successfully Logged In...")
-                // setUserRole(uuser.role);
-                // alert('Form submitted successfully!');
+                localStorage.setItem('token', data.token); // ✅ Store the token
+            
+                toast.success("Successfully Logged In...");
+            
                 setFormData({ name: '', email: '', password: '' });
-                console.log(formData);
+            
                 if (uuser.role === 'Officer') {
                     navigate('/');
-                    // Redirect to Officer Dashboard
                 } else if (uuser.role === 'Main Admin') {
-                    navigate('/'); // Redirect to Admin Dashboard
+                    navigate('/');
                 } else if (uuser.role === 'Worker') {
-                    navigate('/'); // Redirect to User Dashboard
+                    navigate('/');
                 } else {
                     alert('Unrecognized role');
                 }
-
-
-
+            
 
             } else {
                 toast('Incorrect username or password.');

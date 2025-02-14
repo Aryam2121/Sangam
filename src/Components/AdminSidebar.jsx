@@ -14,7 +14,7 @@ const AdminSidebar = () => {
     localStorage.removeItem("user");
 
     // Redirect to login page
-    navigate("/loginn");
+    navigate("/login");
   };
 
   const handleToggleSidebar = () => {
@@ -143,10 +143,10 @@ const AdminSidebar = () => {
               {!isCollapsed && <span>Cost Reduction</span>}
             </Link>
             <Link
-              to="/loginn"
+              to="/login"
               onClick={handleLogout}
               className={`flex items-center gap-4 p-5 transition-colors ${
-                location.pathname === '/loginn'
+                location.pathname === '/login'
                   ? 'bg-gray-700 text-yellow-500'
                   : 'text-white hover:bg-gray-700'
               }`}
